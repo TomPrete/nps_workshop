@@ -20,7 +20,7 @@ Application User Flow:
 
 1. Ensure you have [Google Chrome](https://www.google.com/chrome/) downloaded.
 2. Ensure you have a GMail  email Account to get access to the Google Maps Embed API.
-3. Please copy and download the following folder files from Google Drive. [US National Parks](https://drive.google.com/open?id=17DPRe72fAA7XSDg3WTrl1s_0tTPH8FfK).
+3. Please copy and download the following folder files from Google Drive. [us_national_parks](https://drive.google.com/open?id=1W_f7ue9t31EYaRPY-Z8gWPHDorn6JOsg).
 4. Download a text editor to write your code in. I like to use VSCode. You can download it [here](https://code.visualstudio.com/download)
 
 
