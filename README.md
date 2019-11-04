@@ -250,3 +250,82 @@ Example Search for `Seattle`:
 ]
 
 ```
+
+__Great!__ We’re only getting the data that we want. But wait…don’t we want to display each National Park on the Screen? 
+
+### Getting our National Park Data to Display on the Screen. 
+
+Now that we have only the data that we want from each National Park and we’ve assigned all the National Parks to a variable called `cleanData` we can loop through the `cleanData` and display each National Park on the screen (or DOM). 
+
+But how do we put the data on the screen? Fortunately, I’ve already created a function called `createCard` that will display the data using the design patterns of a Bootstrap Card. Don’t worry specifically what that means. Just know there’s already a function that will create a ‘card’ of each National Park for us. (You can read about the Bootstrap Card I’m replicating [here](https://getbootstrap.com/docs/4.3/components/card/).
+
+The `createCard` function takes in numerous parameters (`id`, `title`, `text`, `parkImage`, `googleMapUrl`, `url`, `latLong`, & `helperFunctions`). We currently don’t have access to the `googleMapUrl` or the `latLong` values so we’ll assign a default value of `null` & `undefined`. (`googleMapUrl=null` & `latLong=undefined`) 
+
+In fact, I created `default values` for all the parameters just in case some National Parks don’t have access to `id`, `title`, `text`, `parkImage`, `googleMapUrl`, `url`, `latLong`, & `helperFunctions`.
+
+Since we already have the `createCard` function created for us now we can use the `createCard` function within our `getNpsData` function. 
+
+In our `getNpsData` function, after the `npsElement.innerHTML = ‘’` create a `for loop` that iterates through the `cleanData` variable and appends a National Park card to the `npsElement`.
+
+Before:
+```js
+// GET NATIONAL PARK SERVICE DATA
+function getNpsData(event) {
+    event.preventDefault()
+    let npsElement = document.getElementById('national-parks')
+    npsElement.innerHTML = loadingJumbo // Shows a loading status.
+    let search = event.target.elements[0].value // Grabs the search query.
+    if (search.length) { // Conditional logic in case No Results are returned.
+      fetch(`https://developer.nps.gov/api/v1/parks?parkCode=&q=${search}&fields=images&api_key=${NPS_API}`)
+        .then(res =>
+          res.json()
+        )
+        .then(data => {
+          let npsElement = document.getElementById('national-parks')
+          if (data.data.length === 0) { // Conditional logic in case No Results are returned.
+            return npsElement.innerHTML = 'Your search returned 0 results'
+          }
+          let cleanData = cleanNpsData(data.data) // Here is where we’re calling the 'cleanupsData' function and assigning it to a variable called 'cleanData'
+          npsElement.innerHTML = ''
+          console.log(cleanData) // Will print the 'cleanData' variable which should only show the 'img', 'text', 'url', & 'title'
+        })
+    } else return npsElement.innerHTML = alert
+  }
+```
+
+After:
+```js
+// GET NATIONAL PARK SERVICE DATA
+function getNpsData(event) {
+  event.preventDefault()
+  let npsElement = document.getElementById('national-parks')
+  let clearMap = document.getElementById('i-frame')
+  clearMap.innerHTML = ''
+  npsElement.innerHTML = loadingJumbo // Shows a loading status
+  let search = event.target.elements[0].value // Grabs the search query
+  if (search.length) {
+    fetch(`https://developer.nps.gov/api/v1/parks?parkCode=&q=${search}&fields=images&api_key=${NPS_API}`)
+      .then(res =>
+        res.json()
+      )
+      .then(data => {
+        let npsElement = document.getElementById('national-parks')
+        if (data.data.length === 0) {
+          return npsElement.innerHTML = 'Your search returned 0 results'
+        }
+        let cleanData = cleanNpsData(data.data)
+        npsElement.innerHTML = ''
+        for (let i = 0; i < cleanData.length; i++) { // Iterate through the 'cleanData'
+          let title = cleanData[i].title // Creating a new variable 'title'
+          let text = cleanData[i].text // Creating a new variable 'text'
+          let img = cleanData[i].img // Creating a new variable 'img'
+          let url = cleanData[i].url // Creating a new variable 'url'
+          let latLong = cleanData[i].latLong // Creating a new variable 'latLong'
+          let googleMapUrl = cleanData[i].googleMapUrl // Creating a new variable 'googleMapUrl'
+          npsElement.appendChild(createCard(i, title, text, img, googleMapUrl, url, latLong, helperFunctions)) // Passing in the cleanData values to the 'createCard' function and appending each Card to the 'npsElement
+        }
+
+      })
+  } else return targetElement.innerHTML = alert
+}
+```
