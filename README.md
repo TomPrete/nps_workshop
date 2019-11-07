@@ -148,6 +148,8 @@ function getNpsData(event) {
   }
 ```
 
+Save your `app.js` file and refresh your page. Search for a National Park (Ex: Washington).
+
 Look in the Console. You should get back data! __Woooooo!__
 
 How is this happening?
