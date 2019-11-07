@@ -479,7 +479,11 @@ _(NOTE: Google Maps might not be able to locate the National Park based off of i
 
 If you’ve done everything correctly up until this point you’ve managed to use __TWO__ API’s to get data, parsed/cleaned the data, and then managed to display them to the screen. This is a lot! A lot of developers would have a difficult time just doing one of these. You managed to do both!
 
-In order to get weather data from the National Parks we need a Weather API. In our case, we’re going to use Dark Sky free weather API. You’ll need to [Signup](https://darksky.net/dev/register) to get an API. Once you Signup and Login to Dark Sky you’ll see your SECRET KEY. 
+The following instructions will be less indepth to see if you can figure out how to make an API call (similar to that of the National Parks Service API) and then display the data to the screen. 
+
+For our stretch goal we’re going to try and use a weather API. In order to do so we need to get the Latitude and Longitude from the National Park’s data, parse the data into something the weather API can use, then make an API call to the weather API, then use the data we get back from the weather API to display the current temperature and a graphic on the screen. 
+
+In order to get weather data from the National Parks we need a Weather API. In our case, we’re going to use Dark Sky’s free weather API. You’ll need to [Signup](https://darksky.net/dev/register) to get an API. Once you Signup and Login to Dark Sky you’ll see your SECRET KEY. 
 
 At the top of the `app.js` file there is a variable called `darkSkyUrl` with a value of `'https://api.darksky.net/forecast/YOUR_DARK_SKI_API/'`
 
@@ -525,3 +529,103 @@ National Park Service Example API Call:
 "name": "Acadia"
 }
 ```
+
+In our `cleanNpsData` function there is some commented out code. There’s an `if` statement that will run __IF__ the `latLong` has a value in the NPS Data. If it does then this piece of code will be executed. This piece of code will then call another function called `getLatLong` which will parse the `"lat:44.30777545, long:-68.30063316”` string into an array where the value at index 0 of the array is the latitude and the value at index 1 is the longitude (Ex: `[44.30777545,-68.30063316]. We’ll also convert the string into a number data type.
+
+`getLatLong` function:
+```js
+// FORMATS LATITUDE AND LONGITUDE
+function getLatLong(latLong) {
+  console.log("Parsing latitude and longitude...")
+  // write your code here
+  const location = latLong.split(/[,:]/mg) // Splits the string at commas and colons
+  return [+location[1], +location[3]]
+}
+```
+
+`cleanNpsData` function:
+```js
+// CLEAN NPS DATA
+function cleanNpsData(data) {
+  for (let i = 0; i < data.length; i++) {
+    console.log(data)
+    let park = {} // The park object
+    park['title'] = data[i].fullName
+    park['text'] = data[i].description
+    park['img'] = data[i].images.length ? data[i].images[0].url : 'file:///Users/taprete/us_parks_workshop/assets/bear_in_park.png'
+    park['url'] = data[i].url
+    park['googleMapUrl'] = createGoogleMapUrl(data[i].fullName)
+    if (data[i].latLong !== '') { // Will execute this code if 'latLong' has a value
+       park['latLong'] = getLatLong(data[i].latLong) // Assigns a 'latLong' key to the park object and executes 'getLatLong' function that parses the latitude and longitude into something the Dark Sky API can use
+     }
+    nationalParks.push(park)
+  }
+  return nationalParks
+}
+```
+
+If you save your `app.js` file, refresh your page, and search for a National Park there should be a ‘View Weather’ button that shows if applicable (if there is no latitude and longitude a button will not show). If you click on the ‘View Weather’ button nothing happens on the screen but in the console it should say “Clicked View Weather button…”. There is another `onclick` event handler similar to that of `mapButton.onclick`s handler. 
+
+In the `weatherButton.onclick` handler is where we’ll call both `getWeatherData` and `displayWeather` functions located in the `helperFunctions` object. 
+
+First we need to write the `getWeatherData` function and the `weatherButton.onclick` function.
+
+### See if you can on your own.
+
+#### HINT:
+
+`getWeatherData` function:
+```js
+  // GET WEATHER DATA
+  'getWeatherData': async (lat, long) => {
+    console.log("Get weather data...")
+    // write your code here
+    let targetElement = document.getElementById('weather')
+    targetElement.innerHTML = ''
+    targetElement.innerHTML = loadingWeather
+    if (lat !== undefined || long !== undefined) {
+      let response = await fetch(`${proxy}${darkSkyUrl}${lat},${long}`) // Making API call using Dark Sky's API
+      let data = response.json() // Formating the Weather Data we get back from to JSON format
+      return data // Returning the Weather Data
+    } else { // If no weather data is returned execute this code
+      return {'response': 'No weather data available'}
+    }
+  },
+```
+
+`displayWeather` function:
+```js
+  // DISPLAY WEATHER ON SCREEN
+  'displayWeather': (data) => {
+    console.log('Display weather data...')
+    console.log(data)
+    let targetElement = document.getElementById('weather')
+    window.scrollTo(0, 0)
+    targetElement.innerHTML = ''
+    let degreeNode = document.createElement('h1')
+    let imageNode = document.createElement('img')
+    imageNode.setAttribute('src', images.cloudy)
+    imageNode.setAttribute('height', '200px')
+    imageNode.setAttribute('width', '200px')
+    imageNode.setAttribute('alt', 'this is an image')
+    targetElement.appendChild(degreeNode).innerHTML = `${data.currently.summary} and ${Math.round(data.currently.temperature)} degress F`
+    targetElement.appendChild(imageNode)
+  }
+```
+
+`weatherButton.onclick` function: 
+```js
+    // ONCLICK GETS WEATHER AND DISPLAYS WEATHER
+    weatherButton.onclick =  async () => {
+      window.scrollTo(0,0)
+      let weatherData = await helperFunctions.getWeatherData(latLong[0], latLong[1]) // Passes in Latitude and Longitude as parameters
+      console.log("DATA: ", weatherData)
+      helperFunctions.displayWeather(weatherData) // Passes in the 'weatherData' received by the weather API into the 'displayWeather' function
+    }
+```
+
+After you’ve written those functions save your `app.js` file, refresh your page, search for a National Park and click the ‘View Weather’ button and you should see the Temperature and _maybe_ a weather icon. (make sure your weather `images` or are using the correct directory path)
+
+## CONGRATULATIONS! YOU’VE COMPLETED A PRETTY COOL APPLICATION! 
+
+### What will you build next? 
