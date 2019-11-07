@@ -468,3 +468,9 @@ After:
     src='${googleMapUrl}' allowfullscreen></iframe>`
   },
 ```
+
+Save your `app.js` file and refresh your screen. Search for a National Park. If you’ve done everything correctly up until this point once the National Parks show up on the screen click on ‘View Map’ and you should autoscroll the top of the page and a Google Map of the National Park you click on should show!
+
+_(NOTE: Google Maps might not be able to locate the National Park based off of its title and it will just show a Google Map of the world. This is known as an edge case and we’d normally address it. But for timing purposes we will not worry about it for the moment. But think about how you might handle this edge case.)_
+
+### You’re doing great!
