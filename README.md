@@ -474,3 +474,54 @@ Save your `app.js` file and refresh your screen. Search for a National Park. If 
 _(NOTE: Google Maps might not be able to locate the National Park based off of its title and it will just show a Google Map of the world. This is known as an edge case and we’d normally address it. But for timing purposes we will not worry about it for the moment. But think about how you might handle this edge case.)_
 
 ### You’re doing great!
+
+## STRETCH GOAL: Getting Weather Data of the National Park and Displaying it. 
+
+If you’ve done everything correctly up until this point you’ve managed to use __TWO__ API’s to get data, parsed/cleaned the data, and then managed to display them to the screen. This is a lot! A lot of developers would have a difficult time just doing one of these. You managed to do both!
+
+In order to get weather data from the National Parks we need a Weather API. In our case, we’re going to use Dark Sky free weather API. You’ll need to [Signup](https://darksky.net/dev/register) to get an API. Once you Signup and Login to Dark Sky you’ll see your SECRET KEY. 
+
+At the top of the `app.js` file there is a variable called `darkSkyUrl` with a value of `'https://api.darksky.net/forecast/YOUR_DARK_SKI_API/'`
+
+Please replace the `YOUR_DARK_SKI_API` with your actual Dark Sky API
+
+After:
+```js
+const darkSkyUrl = `https://api.darksky.net/forecast/2699e...the rest of your api/‘
+```
+
+In your Dark Sky account you’ll also see an example of an __Sample API Call__ to retrieve weather data. 
+
+Sample API Call:
+```js
+https://api.darksky.net/forecast/2699e...the rest of your api/37.8267,-122.4233
+```
+
+If you click on the Sample API Call it will open a new tab in your browser and display JSON data (Javascript Object Notation). This is how the data will look when you get the weather for you National Park. Notice at the very top there is a `latitude` and `longitude`. In the data we get back from the National Park API (before we clean it) there is a `latlong:` key with a latitude and longitude string value.
+
+Dark Sky Sample API Call: 
+```js
+{
+"latitude": 37.8267,
+"longitude": -122.4233,
+"timezone": "America/Los_Angeles",
+"currently": {
+	"time": 1573160412,
+	"summary": "Mostly Cloudy",
+	"icon": "partly-cloudy-day",
+	"nearestStormDistance": 19,
+	"nearestStormBearing": 344,
+	…
+```
+
+National Park Service Example API Call:
+```js
+{
+"states": "ME",
+"latLong": "lat:44.30777545, long:-68.30063316", // <- HERE IS THE LATITUDE AND LONGITUDE
+"description": "Acadia National Park protects the natural beauty of the highest rocky headlands along the Atlantic coastline of the United States, an abundance of habitats, and a rich cultural heritage. At 3.5 million visits a year, it's one of the top 10 most-visited national parks in the United States. Visitors enjoy 27 miles of historic motor roads, 158 miles of hiking trails, and 45 miles of carriage roads.",
+"designation": "National Park",
+"parkCode": "acad",
+"name": "Acadia"
+}
+```
