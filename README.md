@@ -375,9 +375,10 @@ First, in our `createGoogleMapUrl` function there should be a `console.log(title
 
 In your `createGoogleMaps` function:
 ```js
-// CREATE GOOGLE MAP URL
-function createGoogleMapUrl(title) {
-  console.log(title)
+// CREATE GOOGLE MAP URL
+function createGoogleMapUrl(title) {
+  console.log("Create Google Map URL...")
+  // write your code here
 }
 ```
 
