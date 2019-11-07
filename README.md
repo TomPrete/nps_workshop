@@ -346,9 +346,14 @@ Let's incorporate getting Google Maps into our application. First, visit https:/
 
 After you register for an API key, copy and paste the API and put it into your `app.js` file in the `GOOGLE_MAPS_API` variable like we did for the `NPS_API`.
 
-To incorporate a The Google Map into our application we need to include an the Google Maps URL as the `src` attribute of an `iframe` element 
+Example:
+```js
+const GOOGLE_MAPS_API = 'AIzaSyDBtD…fill in the reset’
+```
 
-It will look something like this for the Seattle Space Needle:
+To incorporate a The Google Map into our application we need to include an the Google Maps URL as the `src` attribute of an `iframe` HTML element .
+
+It looks something like this for the Seattle Space Needle:
 ```js
 <iframe
   width="600"
@@ -359,10 +364,10 @@ It will look something like this for the Seattle Space Needle:
 </iframe>
 ```
 
-However, in place of the Seattle Space Needle we need to include the name of the National Park we want to Map. 
+However, in place of the Seattle Space Needle we need to include the name of the National Park we want to Map.
 
-First, We need to use the `title` of `cleanData` and manipulate it to include pluses `+` like `Space+Needle,Seattle+WA`. Fortunately, we have a function called `createGoogleMapUrl` that takes in a `title` parameter and the output will the the url need for the `src` attribute. Ex: `https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_API}
-    &q={modified_title}`
+First, We need to use the `title` of `cleanData` and manipulate it to include pluses `+` like `Space+Needle,Seattle+WA`. As seen in the above code snippet. We have to do this because URLs don’t like spaces in them. Fortunately, we have a function called `createGoogleMapUrl` that takes in a `title` parameter and the output will be the url needed for the `src` attribute of the `<iframe>`. 
+Ex url: `https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_API}&q={modified_title}`
 
 First, in our `createGoogleMapUrl` function write a `console.log(title)`. 
 
@@ -377,3 +382,13 @@ function createGoogleMapUrl(title) {
 Then in our `cleanNpsData` function __uncomment__ the `park['googleMapUrl'] = createGoogleMapUrl(data[i].fullName)` so we can call the `createGoogleMapUrl` function and pass in the original data’s `fullName`, we renamed it  `title` to clean it up. 
 
 Refresh your application and make a search for a National Park. Look in the Console and you will see the `fullName` or `title` of the National Park you searched for!
+
+__GREAT!__
+
+Now for the _hard_ part. We need to take the title of the National Park and replace the spaces in the title with pluses `+`.
+
+Example Before: `George Rogers Clark National Historical Park`
+
+Example After: `George+Rogers+Clark+National+Historical+Park`
+
+
