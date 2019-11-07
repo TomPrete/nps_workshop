@@ -9,7 +9,7 @@ Application User Flow:
 2. We will retrieve and display a list of National Parks based on your search query.
 3. The list of National Parks will have 3 buttons on them, a button that links to the National Parks' website, a button that will display a Google Map of the National Park, and a button that will display the National Park's weather if applicable.
 
-## What you’ll learn today. 
+## What you’ll learn today.
 
 1. You’ll learn how to Use API’s (Google Maps, National Parks, Dark Sky).
 2. You’ll learn how to manipulate data that’s retrieved from an API using Javascript.
@@ -26,16 +26,16 @@ Application User Flow:
 
 ## Our Application File Structure
 
-After downloading the US National Parks folder from the Google Drive and unzipping it. There should be 2 files (`app.js`, `index.html`) and an `assets` folder. 
+After downloading the US National Parks folder from the Google Drive and unzipping it. There should be 2 files (`app.js`, `index.html`) and an `assets` folder.
 
 1. The `index.html` file:
     1. This HTML file is the main entry point to our application. We’ll open this file in the web browser.
 2. The `app.js` file:
     1. This Javascript file is where we’ll be performing all the logic of the application. Including getting data from the API’s.
 3. The `assets` folder:
-    1. This is where we’re storing our assets for our application. Like images and other file types. 
+    1. This is where we’re storing our assets for our application. Like images and other file types.
 
-There is a base of code in the `index.html` and `app.js` files that we’ll build upon. 
+There is a base of code in the `index.html` and `app.js` files that we’ll build upon.
 
 ## Let’s Get Started
 
@@ -72,7 +72,7 @@ Press `Command+Option+J` (Mac) or `Control+Shift+J` (Windows, Linux, Chrome 
 
 __Open DevTools from Chrome's main menu:__
 
-Click __Customize and control Google Chrome__ (the 3 vertical dots in the upper right hand corner of the Chrome Web Browser) and then select __More Tools > Developer Tools__. Navigate to the __Console__ tab. 
+Click __Customize and control Google Chrome__ (the 3 vertical dots in the upper right hand corner of the Chrome Web Browser) and then select __More Tools > Developer Tools__. Navigate to the __Console__ tab.
 
 If your `app.js` file was loaded correctly into your HTML file when your refresh your `index.html` page with the Chrome Dev Tools Console panel open you should see 2 things printed, `Hello Hacker!` and the file path to your `index.html` file (Ex: `file:///Users/taprete/us_national_parks/index.html`)
 
@@ -80,11 +80,11 @@ Let’s open up the `app.js` file in our Text Editor (VSCode). You can see on th
 
 ## Release 1: Getting National Park Data
 
-For Release 1 we’ll be using the National Park’s API to get National Parks based on our search query. 
+For Release 1 we’ll be using the National Park’s API to get National Parks based on our search query.
 
-First, we’ll need to get an API key to use the NPS API. Visit the NPS [Get Started](https://www.nps.gov/subjects/developer/get-started.htm) page and Signup to receive an API Key to access National Park Service Data. 
+First, we’ll need to get an API key to use the NPS API. Visit the NPS [Get Started](https://www.nps.gov/subjects/developer/get-started.htm) page and Signup to receive an API Key to access National Park Service Data.
 
-Once you sign up you should receive an email with your API Key. Your API key is a unique identifier used to authenticate you when you’re making API Calls. 
+Once you sign up you should receive an email with your API Key. Your API key is a unique identifier used to authenticate you when you’re making API Calls.
 
 You should receive an email that looks something like this from __Your National Park Service API key__
 ```
@@ -110,7 +110,7 @@ When we click on the Get Parks button we want to grab National Park Data.
 
 Click on the Get Parks button and see what prints out in the Console. It should print `Search for national parks…`.  Where is the function being executed in our `app.js` file?
 
-In the function named `getNpsData` is where we’ll be getting all the National Park data. 
+In the function named `getNpsData` is where we’ll be getting all the National Park data.
 
 `getNpsData` Function:
 ```javascript
@@ -131,7 +131,7 @@ function getNpsData(event) {
     let npsElement = document.getElementById('national-parks')
     npsElement.innerHTML = loadingJumbo // Shows a loading status
     let search = event.target.elements[0].value // Grabs the search query
-    if (search.length) { // Conditional logic in case No Results are returned. 
+    if (search.length) { // Conditional logic in case No Results are returned.
       fetch(`https://developer.nps.gov/api/v1/parks?parkCode=&q=${search}&fields=images&api_key=${NPS_API}`)
         .then(res =>
           res.json()
@@ -148,7 +148,7 @@ function getNpsData(event) {
   }
 ```
 
-Look in the Console. You should get back data! __Woooooo!__ 
+Look in the Console. You should get back data! __Woooooo!__
 
 How is this happening?
 
@@ -179,7 +179,7 @@ function cleanNpsData(data) {
 
 In the `cleanNpsData` function is where we’ll parse out data returned from the National Parks API and only grab the data we want. But first in our `getNpsData` functions let’s pass the `data` that’s being passed into the `console.log(data.data)` and instead pass it into our `cleanNpsData` function and assign that to a variable.
 
-In our `getNpsData` function: 
+In our `getNpsData` function:
 ```javascript
 // GET NATIONAL PARK SERVICE DATA
 function getNpsData(event) {
@@ -205,9 +205,9 @@ function getNpsData(event) {
 }
 ```
 
-Next, in our `cleanNpsData` function lets loop through the data (iterate through each National Park) and extract only the data that we want. We only want the `fullName`, `description`,  the `image` url, and the park’s `url` for the time being. 
+Next, in our `cleanNpsData` function lets loop through the data (iterate through each National Park) and extract only the data that we want. We only want the `fullName`, `description`,  the `image` url, and the park’s `url` for the time being.
 
-We’re going to also be including a `googleMapUrl` and the `latLong` in the data but right now those two are commented out. We’ll get to those at a later. 
+We’re going to also be including a `googleMapUrl` and the `latLong` in the data but right now those two are commented out. We’ll get to those at a later.
 
 After (`cleanNpsData`):
 ```javascript
@@ -230,7 +230,7 @@ function cleanNpsData(data) {
 }
 ```
 
-Refresh your page and search for something like __seattle__ or __oregon__ and see what displays in our Console. 
+Refresh your page and search for something like __seattle__ or __oregon__ and see what displays in our Console.
 
 Example Search for `Seattle`:
 ```js
@@ -251,19 +251,19 @@ Example Search for `Seattle`:
 
 ```
 
-__Great!__ We’re only getting the data that we want. But wait…don’t we want to display each National Park on the Screen? 
+__Great!__ We’re only getting the data that we want. But wait…don’t we want to display each National Park on the Screen?
 
 ## Release 2:  Displaying National Parks on the screen/in the DOM (Document Object Model).
 
-Now that we have only the data that we want from each National Park and we’ve assigned all the National Parks to a variable called `cleanData` we can loop through the `cleanData` and display each National Park on the screen (or DOM). 
+Now that we have only the data that we want from each National Park and we’ve assigned all the National Parks to a variable called `cleanData` we can loop through the `cleanData` and display each National Park on the screen (or DOM).
 
 But how do we put the data on the screen? Fortunately, I’ve already created a function called `createCard` that will display the data using the design patterns of a Bootstrap Card. Don’t worry specifically what that means. Just know there’s already a function that will create a ‘card’ of each National Park for us. (You can read about the Bootstrap Card I’m replicating [here](https://getbootstrap.com/docs/4.3/components/card/).
 
-The `createCard` function takes in numerous parameters (`id`, `title`, `text`, `parkImage`, `googleMapUrl`, `url`, `latLong`, & `helperFunctions`). We currently don’t have access to the `googleMapUrl` or the `latLong` values so we’ll assign a default value of `null` & `undefined`. (`googleMapUrl=null` & `latLong=undefined`) 
+The `createCard` function takes in numerous parameters (`id`, `title`, `text`, `parkImage`, `googleMapUrl`, `url`, `latLong`, & `helperFunctions`). We currently don’t have access to the `googleMapUrl` or the `latLong` values so we’ll assign a default value of `null` & `undefined`. (`googleMapUrl=null` & `latLong=undefined`)
 
 In fact, I created `default values` for all the parameters just in case some National Parks don’t have access to `id`, `title`, `text`, `parkImage`, `googleMapUrl`, `url`, `latLong`, & `helperFunctions`.
 
-Since we already have the `createCard` function created for us now we can use the `createCard` function within our `getNpsData` function. 
+Since we already have the `createCard` function created for us now we can use the `createCard` function within our `getNpsData` function.
 
 In our `getNpsData` function, after the `npsElement.innerHTML = ‘’` create a `for loop` that iterates through the `cleanData` variable and appends a National Park card to the `npsElement`.
 
@@ -338,7 +338,7 @@ __You’ve just created an application!__
 
 Now that we have the National Parks showing up. Let’s look at what is included in each National Park Card. We have an Image, a Title, a short description about the National Park and two buttons, Website & View Map. If we inspect our data, the `img` is a url to the image that’s being displayed, the `title` is the bolded Card Title, the `text` is the short description of the National Park on the Card. Lastly, if we click on the __Website__ button it should open a new tab that will take us the the NPS Website of the National Park we clicked on. This is the `url` that we passed in.
 
-That’s awesome! However, we have a __View Map__ button and when we click on it nothing happens. 
+That’s awesome! However, we have a __View Map__ button and when we click on it nothing happens.
 
 ### Google Maps API
 
@@ -366,12 +366,12 @@ It looks something like this for the Seattle Space Needle:
 
 However, in place of the Seattle Space Needle we need to include the name of the National Park we want to Map.
 
-First, We need to use the `title` of `cleanData` and manipulate it to include pluses `+` like `Space+Needle,Seattle+WA`. As seen in the above code snippet. We have to do this because URLs don’t like spaces in them. Fortunately, we have a function called `createGoogleMapUrl` that takes in a `title` parameter and the output will be the url needed for the `src` attribute of the `<iframe>`. 
+First, We need to use the `title` of `cleanData` and manipulate it to include pluses `+` like `Space+Needle,Seattle+WA`. As seen in the above code snippet. We have to do this because URLs don’t like spaces in them. Fortunately, we have a function called `createGoogleMapUrl` that takes in a `title` parameter and the output will be the url needed for the `src` attribute of the `<iframe>`.
 Ex url: `https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_API}&q={modified_title}`
 
-First, in our `createGoogleMapUrl` function there should be a `console.log(title)`. 
+First, in our `createGoogleMapUrl` function there should be a `console.log(title)`.
 
-In your `createGoogleMaps` function: 
+In your `createGoogleMaps` function:
 ```js
 // CREATE GOOGLE MAP URL
 function createGoogleMapUrl(title) {
@@ -379,7 +379,7 @@ function createGoogleMapUrl(title) {
 }
 ```
 
-Then in our `cleanNpsData` function __uncomment__ the `park['googleMapUrl'] = createGoogleMapUrl(data[i].fullName)` so we can call the `createGoogleMapUrl` function and pass in the original data’s `fullName`, we renamed it  `title` to clean it up. 
+Then in our `cleanNpsData` function __uncomment__ the `park['googleMapUrl'] = createGoogleMapUrl(data[i].fullName)` so we can call the `createGoogleMapUrl` function and pass in the original data’s `fullName`, we renamed it  `title` to clean it up.
 
 Refresh your application and make a search for a National Park. Look in the Console and you will see the `fullName` or `title` of the National Park you searched for!
 
@@ -391,7 +391,7 @@ Example Before: `George Rogers Clark National Historical Park`
 
 Example After: `George+Rogers+Clark+National+Historical+Park`
 
-Fortunately, there is a built in methodthat will help us do that. It’s called the `replace()` method. This method will replace certain portions of a string with whatever we want it to. Again, we need to replace spaces with pluses `+`.  I’ve also noticed that there are some `title`s with the `&` sign. URLs don’t like the `&` sign either, so we’ll have to use the `replace` method to replace the `&` sign with the word `and`. 
+Fortunately, there is a built in methodthat will help us do that. It’s called the `replace()` method. This method will replace certain portions of a string with whatever we want it to. Again, we need to replace spaces with pluses `+`.  I’ve also noticed that there are some `title`s with the `&` sign. URLs don’t like the `&` sign either, so we’ll have to use the `replace` method to replace the `&` sign with the word `and`.
 
 Once we have a title that has replaced all the spaces with pluses and all the ‘&’ signs with the word `and` we can create a Google Maps URL that we’ll use to display the map of where the National Park is located.
 
@@ -450,7 +450,7 @@ Example:
   'displayMap': (googleMapUrl) => {
     console.log("Display Map...")
     // write your code here
-    let map = document.getElementById('i-frame') // 
+    let map = document.getElementById('i-frame') //
   },
 ```
 
@@ -475,15 +475,15 @@ _(NOTE: Google Maps might not be able to locate the National Park based off of i
 
 ### You’re doing great!
 
-## STRETCH GOAL: Getting Weather Data of the National Park and Displaying it. 
+## STRETCH GOAL: Getting Weather Data of the National Park and Displaying it.
 
 If you’ve done everything correctly up until this point you’ve managed to use __TWO__ API’s to get data, parsed/cleaned the data, and then managed to display them to the screen. This is a lot! A lot of developers would have a difficult time just doing one of these. You managed to do both!
 
-The following instructions will be less indepth to see if you can figure out how to make an API call (similar to that of the National Parks Service API) and then display the data to the screen. 
+The following instructions will be less indepth to see if you can figure out how to make an API call (similar to that of the National Parks Service API) and then display the data to the screen.
 
-For our stretch goal we’re going to try and use a weather API. In order to do so we need to get the Latitude and Longitude from the National Park’s data, parse the data into something the weather API can use, then make an API call to the weather API, then use the data we get back from the weather API to display the current temperature and a graphic on the screen. 
+For our stretch goal we’re going to try and use a weather API. In order to do so we need to get the Latitude and Longitude from the National Park’s data, parse the data into something the weather API can use, then make an API call to the weather API, then use the data we get back from the weather API to display the current temperature and a graphic on the screen.
 
-In order to get weather data from the National Parks we need a Weather API. In our case, we’re going to use Dark Sky’s free weather API. You’ll need to [Signup](https://darksky.net/dev/register) to get an API. Once you Signup and Login to Dark Sky you’ll see your SECRET KEY. 
+In order to get weather data from the National Parks we need a Weather API. In our case, we’re going to use Dark Sky’s free weather API. You’ll need to [Signup](https://darksky.net/dev/register) to get an API. Once you Signup and Login to Dark Sky you’ll see your SECRET KEY.
 
 At the top of the `app.js` file there is a variable called `darkSkyUrl` with a value of `'https://api.darksky.net/forecast/YOUR_DARK_SKI_API/'`
 
@@ -494,7 +494,7 @@ After:
 const darkSkyUrl = `https://api.darksky.net/forecast/2699e...the rest of your api/‘
 ```
 
-In your Dark Sky account you’ll also see an example of an __Sample API Call__ to retrieve weather data. 
+In your Dark Sky account you’ll also see an example of an __Sample API Call__ to retrieve weather data.
 
 Sample API Call:
 ```js
@@ -503,7 +503,7 @@ https://api.darksky.net/forecast/2699e...the rest of your api/37.8267,-122.4233
 
 If you click on the Sample API Call it will open a new tab in your browser and display JSON data (Javascript Object Notation). This is how the data will look when you get the weather for you National Park. Notice at the very top there is a `latitude` and `longitude`. In the data we get back from the National Park API (before we clean it) there is a `latlong:` key with a latitude and longitude string value.
 
-Dark Sky Sample API Call: 
+Dark Sky Sample API Call:
 ```js
 {
 "latitude": 37.8267,
@@ -564,9 +564,9 @@ function cleanNpsData(data) {
 }
 ```
 
-If you save your `app.js` file, refresh your page, and search for a National Park there should be a ‘View Weather’ button that shows if applicable (if there is no latitude and longitude a button will not show). If you click on the ‘View Weather’ button nothing happens on the screen but in the console it should say “Clicked View Weather button…”. There is another `onclick` event handler similar to that of `mapButton.onclick`s handler. 
+If you save your `app.js` file, refresh your page, and search for a National Park there should be a ‘View Weather’ button that shows if applicable (if there is no latitude and longitude a button will not show). If you click on the ‘View Weather’ button nothing happens on the screen but in the console it should say “Clicked View Weather button…”. There is another `onclick` event handler similar to that of `mapButton.onclick`s handler.
 
-In the `weatherButton.onclick` handler is where we’ll call both `getWeatherData` and `displayWeather` functions located in the `helperFunctions` object. 
+In the `weatherButton.onclick` handler is where we’ll call both `getWeatherData` and `displayWeather` functions located in the `helperFunctions` object.
 
 First we need to write the `getWeatherData` function and the `weatherButton.onclick` function.
 
@@ -613,7 +613,7 @@ First we need to write the `getWeatherData` function and the `weatherButton.oncl
   }
 ```
 
-`weatherButton.onclick` function: 
+`weatherButton.onclick` function:
 ```js
     // ONCLICK GETS WEATHER AND DISPLAYS WEATHER
     weatherButton.onclick =  async () => {
@@ -626,6 +626,6 @@ First we need to write the `getWeatherData` function and the `weatherButton.oncl
 
 After you’ve written those functions save your `app.js` file, refresh your page, search for a National Park and click the ‘View Weather’ button and you should see the Temperature and _maybe_ a weather icon. (make sure your weather `images` or are using the correct directory path)
 
-## CONGRATULATIONS! YOU’VE COMPLETED A PRETTY COOL APPLICATION! 
+## CONGRATULATIONS! YOU’VE COMPLETED A PRETTY COOL APPLICATION!
 
-### What will you build next? 
+### What will you build next?

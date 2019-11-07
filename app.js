@@ -11,22 +11,36 @@ document.getElementById('form').addEventListener('submit', getNpsData)
 
 // WEATHER IMAGES
 const images = {
-  'cloudy': 'file:///Users/taprete/us_parks_workshop/assets/cloudy-day-3.svg',
-  'day': 'file:///Users/taprete/us_parks_workshop/assets/day.svg'
+  'partly-cloudy-day': 'file:///paht_to_your_assets/assets/cloudy-day-3.svg',
+  'partly-cloudy-night':'file:///paht_to_your_assets/assets/cloudy-night-2.svg',
+  'cloudy': 'file:///paht_to_your_assets/assets/cloudy.svg',
+  'fog': 'file:///paht_to_your_assets/assets/cloudy.svg',
+  'wind': 'file:///paht_to_your_assets/assets/cloudy.svg',
+  'clear-day': 'file:///paht_to_your_assets/assets/day.svg',
+  'clear-night':'file:///paht_to_your_assets/assets/night.svg',
+  'drizzle': 'file:///paht_to_your_assets/assets/rainy-4.svg',
+  'rain': 'file:///paht_to_your_assets/assets/rainy-5.svg',
+  'snow':'file:///paht_to_your_assets/assets/snowy-5.svg',
+  'sleet':'file:///paht_to_your_assets/assets/snowy-6.svg',
+  'thunder':'file:///paht_to_your_assets/assets/thunder.svg',
+  'tornado':'file:///paht_to_your_assets/assets/weather.svg',
 }
 
 // HELPER FUNCTIONS
 let helperFunctions = {
   // DISPLAY MAP ON SCREEN
-  'displayMap': () => {
+  'displayMap': (googleMapUrl) => {
+    console.log("Display Map...")
     // write your code here
   },
   // GET WEATHER DATA
-  'getWeatherData': async () => {
+  'getWeatherData': async (lat, long) => {
+    console.log("Get weather data...")
     // write your code here
   },
   // DISPLAY WEATHER ON SCREEN
   'displayWeather': (data) => {
+    console.log('Display weather data...')
     console.log(data)
     let targetElement = document.getElementById('weather')
     window.scrollTo(0,0)
@@ -43,7 +57,7 @@ let helperFunctions = {
 }
 
 // CREATE A NATIONAL PARK CARD ON SCREEN (id,title,text,parkImage, googleMapUrl, url, latLong, helperFunctions)
-function createCard(id,title,text,parkImage, googleMapUrl, url, latLong, helperFunctions) {
+function createCard(id = 1, title = 'TITLE', text = 'Card Text', parkImage = 'file:///Users/taprete/us_parks_workshop/assets/yellowstone_one.jpg', googleMapUrl = null, url = null, latLong = undefined, helperFunctions) {
 
   let smallCard = document.createElement('div')
   smallCard.setAttribute('class', 'col-sm-4')
@@ -94,12 +108,14 @@ function createCard(id,title,text,parkImage, googleMapUrl, url, latLong, helperF
     cardBody.appendChild(weatherButton).innerHTML = 'View Weather'
     // ONCLICK GETS WEATHER AND DISPLAYS WEATHER
     weatherButton.onclick =  async () => {
+      console.log("Clicked View Weather...")
       // write your code here
     }
   }
 
   // ONCLICK RUNS DISPLAY MAP
   mapButton.onclick = () => {
+    console.log('Clicked View Map...')
     // write your code here
   }
 
@@ -120,6 +136,14 @@ let loadingJumbo = `<div class='jumbotron jumbotron-fluid col-12'>
 </div>
 </div>`
 
+// LOADING WEATHER DATA
+let loadingWeather = `<div class='jumbotron jumbotron-fluid col-12'>
+<div class='container'><div class='spinner-grow' style='width: 3rem; height: 3rem;' role='status'>
+  <span class='sr-only'>Loading...</span>
+  </div>
+</div>
+</div>`
+
 // ALERT WHEN NO TEXT IS ENTERED
 let alert = `
 <div class='alert alert-primary col-12' role='alert'>
@@ -129,17 +153,19 @@ let alert = `
 // GET NATIONAL PARK SERVICE DATA
 function getNpsData(event) {
   event.preventDefault()
-  console.log("Search for national parks...")
+  console.log("Searching for national parks...")
   // write your code here
 }
 
 // FORMATS LATITUDE AND LONGITUDE
 function getLatLong(latLong) {
+  console.log("Parsing latitude and longitude...")
   // write your code here
 }
 
 // CLEAN NPS DATA
 function cleanNpsData(data) {
+  console.log('Cleaning NPS Data...')
   console.log(data)
   // write your code here
 }
