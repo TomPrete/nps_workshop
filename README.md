@@ -9,7 +9,7 @@ Application User Flow:
 2. We will retrieve and display a list of National Parks based on your search query.
 3. The list of National Parks will have 3 buttons on them, a button that links to the National Parks' website, a button that will display a Google Map of the National Park, and a button that will display the National Park's weather if applicable.
 
-## What you’ll learn today.
+## What you’ll learn today. 
 
 1. You’ll learn how to Use API’s (Google Maps, National Parks, Dark Sky).
 2. You’ll learn how to manipulate data that’s retrieved from an API using Javascript.
@@ -20,22 +20,22 @@ Application User Flow:
 
 1. Ensure you have [Google Chrome](https://www.google.com/chrome/) downloaded.
 2. Ensure you have a GMail  email Account to get access to the Google Maps Embed API.
-3. Please copy and download the following folder files from Google Drive. [us_national_parks](https://drive.google.com/open?id=1W_f7ue9t31EYaRPY-Z8gWPHDorn6JOsg).
+3. Please copy and download the following folder files from Google Drive. [US National Parks](https://drive.google.com/drive/folders/1IvmrYFqkl4ICGQqhSK_0JoEZ2EAFrZlR?usp=sharing).
 4. Download a text editor to write your code in. I like to use VSCode. You can download it [here](https://code.visualstudio.com/download)
 
 
 ## Our Application File Structure
 
-After downloading the US National Parks folder from the Google Drive and unzipping it. There should be 2 files (`app.js`, `index.html`) and an `assets` folder.
+After downloading the US National Parks folder from the Google Drive and unzipping it. There should be 2 files (`app.js`, `index.html`) and an `assets` folder. 
 
 1. The `index.html` file:
     1. This HTML file is the main entry point to our application. We’ll open this file in the web browser.
 2. The `app.js` file:
     1. This Javascript file is where we’ll be performing all the logic of the application. Including getting data from the API’s.
 3. The `assets` folder:
-    1. This is where we’re storing our assets for our application. Like images and other file types.
+    1. This is where we’re storing our assets for our application. Like images and other file types. 
 
-There is a base of code in the `index.html` and `app.js` files that we’ll build upon.
+There is a base of code in the `index.html` and `app.js` files that we’ll build upon. 
 
 ## Let’s Get Started
 
@@ -72,23 +72,23 @@ Press `Command+Option+J` (Mac) or `Control+Shift+J` (Windows, Linux, Chrome 
 
 __Open DevTools from Chrome's main menu:__
 
-Click __Customize and control Google Chrome__ (the 3 vertical dots in the upper right hand corner of the Chrome Web Browser) and then select __More Tools > Developer Tools__. Navigate to the __Console__ tab.
+Click __Customize and control Google Chrome__ (the 3 vertical dots in the upper right hand corner of the Chrome Web Browser) and then select __More Tools > Developer Tools__. Navigate to the __Console__ tab. 
 
 If your `app.js` file was loaded correctly into your HTML file when your refresh your `index.html` page with the Chrome Dev Tools Console panel open you should see 2 things printed, `Hello Hacker!` and the file path to your `index.html` file (Ex: `file:///Users/taprete/us_national_parks/index.html`)
 
 Let’s open up the `app.js` file in our Text Editor (VSCode). You can see on the first two lines of `app.js` we have two console.logs: `console.log('Hello Hackers!’)` and `console.log(location.href)`. This is what’s being printed out in our Console.
 
-## Release 1: Getting National Park Data and Displaying National Parks
+## Release 1: Getting National Park Data
 
-For Release 1 we’ll be using the National Park’s API to get National Parks based on our search query.
+For Release 1 we’ll be using the National Park’s API to get National Parks based on our search query. 
 
-First, we’ll need to get an API key to use the NPS API. Visit the NPS [Get Started](https://www.nps.gov/subjects/developer/get-started.htm) page and Signup to receive an API Key to access National Park Service Data.
+First, we’ll need to get an API key to use the NPS API. Visit the NPS [Get Started](https://www.nps.gov/subjects/developer/get-started.htm) page and Signup to receive an API Key to access National Park Service Data. 
 
-Once you sign up you should receive an email with your API Key. Your API key is a unique identifier used to authenticate you when you’re making API Calls.
+Once you sign up you should receive an email with your API Key. Your API key is a unique identifier used to authenticate you when you’re making API Calls. 
 
 You should receive an email that looks something like this from __Your National Park Service API key__
 ```
-Your API key for __YOUR EMAIL is:
+Your API key for YOUR EMAIL is:
 YOUR API KEY SHOULD DISPLAY HERE
 You can start using this key to make web service requests. Simply pass your key in the URL when making a web request. Here's an example:
 https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=YOUR_API KEY SHOULD DISPLAY HERE
@@ -110,7 +110,7 @@ When we click on the Get Parks button we want to grab National Park Data.
 
 Click on the Get Parks button and see what prints out in the Console. It should print `Search for national parks…`.  Where is the function being executed in our `app.js` file?
 
-In the function named `getNpsData` is where we’ll be getting all the National Park data.
+In the function named `getNpsData` is where we’ll be getting all the National Park data. 
 
 `getNpsData` Function:
 ```javascript
@@ -131,7 +131,7 @@ function getNpsData(event) {
     let npsElement = document.getElementById('national-parks')
     npsElement.innerHTML = loadingJumbo // Shows a loading status
     let search = event.target.elements[0].value // Grabs the search query
-    if (search.length) { // Conditional logic in case No Results are returned.
+    if (search.length) { // Conditional logic in case No Results are returned. 
       fetch(`https://developer.nps.gov/api/v1/parks?parkCode=&q=${search}&fields=images&api_key=${NPS_API}`)
         .then(res =>
           res.json()
@@ -148,7 +148,7 @@ function getNpsData(event) {
   }
 ```
 
-Look in the Console. You should get back data! __Woooooo!__
+Look in the Console. You should get back data! __Woooooo!__ 
 
 How is this happening?
 
@@ -179,7 +179,7 @@ function cleanNpsData(data) {
 
 In the `cleanNpsData` function is where we’ll parse out data returned from the National Parks API and only grab the data we want. But first in our `getNpsData` functions let’s pass the `data` that’s being passed into the `console.log(data.data)` and instead pass it into our `cleanNpsData` function and assign that to a variable.
 
-In our `getNpsData` function:
+In our `getNpsData` function: 
 ```javascript
 // GET NATIONAL PARK SERVICE DATA
 function getNpsData(event) {
@@ -205,9 +205,9 @@ function getNpsData(event) {
 }
 ```
 
-Next, in our `cleanNpsData` function lets loop through the data and extract only the data that we want. We only want the `fullName`, `description`,  the `image` url, and the park’s `url` for the time being.
+Next, in our `cleanNpsData` function lets loop through the data (iterate through each National Park) and extract only the data that we want. We only want the `fullName`, `description`,  the `image` url, and the park’s `url` for the time being. 
 
-We’re going to also be including a `googleMapUrl` and the `latLong` in the data but right now those two are commented out. We’ll get to those at a later.
+We’re going to also be including a `googleMapUrl` and the `latLong` in the data but right now those two are commented out. We’ll get to those at a later. 
 
 After (`cleanNpsData`):
 ```javascript
@@ -230,7 +230,7 @@ function cleanNpsData(data) {
 }
 ```
 
-Refresh your page and search for something like __seattle__ or __oregon__ and see what displays in our Console.
+Refresh your page and search for something like __seattle__ or __oregon__ and see what displays in our Console. 
 
 Example Search for `Seattle`:
 ```js
@@ -253,7 +253,7 @@ Example Search for `Seattle`:
 
 __Great!__ We’re only getting the data that we want. But wait…don’t we want to display each National Park on the Screen? 
 
-### Getting our National Park Data to Display on the Screen. 
+## Release 2:  Displaying National Parks on the screen or in the DOM (Document Object Model).
 
 Now that we have only the data that we want from each National Park and we’ve assigned all the National Parks to a variable called `cleanData` we can loop through the `cleanData` and display each National Park on the screen (or DOM). 
 
@@ -329,3 +329,51 @@ function getNpsData(event) {
   } else return targetElement.innerHTML = alert
 }
 ```
+
+__If you’ve done it correctly go ahead and search for a National Park in `California` or `Illinois` and watch the National Parks show up on the screen!__
+
+__You’ve just created an application!__
+
+## Release 3:  Displaying National Parks on the screen or in the DOM (Document Object Model).
+
+Now that we have the National Parks showing up. Let’s look at what is included in each National Park Card. We have an Image, a Title, a short description about the National Park and two buttons, Website & View Map. If we inspect our data, the `img` is a url to the image that’s being displayed, the `title` is the bolded Card Title, the `text` is the short description of the National Park on the Card. Lastly, if we click on the __Website__ button it should open a new tab that will take us the the NPS Website of the National Park we clicked on. This is the `url` that we passed in.
+
+That’s awesome! However, we have a __View Map__ button and when we click on it nothing happens. 
+
+### Google Maps API
+
+Let's incorporate getting Google Maps into our application. First, visit https://developers.google.com/maps/documentation/ and click "Maps Embed API". You can read through all of the documentation on your own. For our pursoses, you get to go down to "Get an API Key" to get an API key. This is a unique key associated with your developer account for billing/usage purposes. You have public/private API keys - the public one is the key you'll put in the URL for most GET requests. The private key is what you'll send encoded for POST requests. If you are getting charged money for using an API, you'll have a private key that you want to protect. If anyone gets a hold of your private key, they can impersonate you and you can get charged boatloads of money. Public keys are public - don't worry about protecting these. Companies generally give public keys when they don't charge for a service (like Google Maps).
+
+After you register for an API key, copy and paste the API and put it into your `app.js` file in the `GOOGLE_MAPS_API` variable like we did for the `NPS_API`.
+
+To incorporate a The Google Map into our application we need to include an the Google Maps URL as the `src` attribute of an `iframe` element 
+
+It will look something like this for the Seattle Space Needle:
+```js
+<iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_API}
+    &q=Space+Needle,Seattle+WA" allowfullscreen>
+</iframe>
+```
+
+However, in place of the Seattle Space Needle we need to include the name of the National Park we want to Map. 
+
+First, We need to use the `title` of `cleanData` and manipulate it to include pluses `+` like `Space+Needle,Seattle+WA`. Fortunately, we have a function called `createGoogleMapUrl` that takes in a `title` parameter and the output will the the url need for the `src` attribute. Ex: `https://www.google.com/maps/embed/v1/place?key={GOOGLE_MAPS_API}
+    &q={modified_title}`
+
+First, in our `createGoogleMapUrl` function write a `console.log(title)`. 
+
+In your `createGoogleMaps` function: 
+```js
+// CREATE GOOGLE MAP URL
+function createGoogleMapUrl(title) {
+  console.log(title)
+}
+```
+
+Then in our `cleanNpsData` function __uncomment__ the `park['googleMapUrl'] = createGoogleMapUrl(data[i].fullName)` so we can call the `createGoogleMapUrl` function and pass in the original data’s `fullName`, we renamed it  `title` to clean it up. 
+
+Refresh your application and make a search for a National Park. Look in the Console and you will see the `fullName` or `title` of the National Park you searched for!
