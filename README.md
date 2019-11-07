@@ -148,6 +148,8 @@ function getNpsData(event) {
   }
 ```
 
+Save your `app.js` file and refresh your page. Search for a National Park (Ex: Washington).
+
 Look in the Console. You should get back data! __Woooooo!__
 
 How is this happening?
@@ -373,9 +375,10 @@ First, in our `createGoogleMapUrl` function there should be a `console.log(title
 
 In your `createGoogleMaps` function:
 ```js
-// CREATE GOOGLE MAP URL
-function createGoogleMapUrl(title) {
-  console.log(title)
+// CREATE GOOGLE MAP URL
+function createGoogleMapUrl(title) {
+  console.log("Create Google Map URL...")
+  // write your code here
 }
 ```
 
@@ -599,12 +602,13 @@ First we need to write the `getWeatherData` function and the `weatherButton.oncl
   'displayWeather': (data) => {
     console.log('Display weather data...')
     console.log(data)
+    let icon = data.currently.icon
     let targetElement = document.getElementById('weather')
     window.scrollTo(0, 0)
     targetElement.innerHTML = ''
     let degreeNode = document.createElement('h1')
     let imageNode = document.createElement('img')
-    imageNode.setAttribute('src', images.cloudy)
+    imageNode.setAttribute('src', images[icon])
     imageNode.setAttribute('height', '200px')
     imageNode.setAttribute('width', '200px')
     imageNode.setAttribute('alt', 'this is an image')
