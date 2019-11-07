@@ -601,12 +601,13 @@ First we need to write the `getWeatherData` function and the `weatherButton.oncl
   'displayWeather': (data) => {
     console.log('Display weather data...')
     console.log(data)
+    let icon = data.currently.icon
     let targetElement = document.getElementById('weather')
     window.scrollTo(0, 0)
     targetElement.innerHTML = ''
     let degreeNode = document.createElement('h1')
     let imageNode = document.createElement('img')
-    imageNode.setAttribute('src', images.cloudy)
+    imageNode.setAttribute('src', images[icon])
     imageNode.setAttribute('height', '200px')
     imageNode.setAttribute('width', '200px')
     imageNode.setAttribute('alt', 'this is an image')
