@@ -328,7 +328,7 @@ function getNpsData(event) {
         }
 
       })
-  } else return targetElement.innerHTML = alert
+  } else return npsElement.innerHTML = alert
 }
 ```
 
